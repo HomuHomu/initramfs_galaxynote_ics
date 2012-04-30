@@ -794,6 +794,11 @@ service flash_recovery /system/etc/install-recovery.sh
     class main
     oneshot
 
+service init_scripts /vendor/scripts/run_init_scripts.sh
+    class main
+    user root
+    oneshot
+
 service run_parts /system/bin/logwrapper /vendor/scripts/run-parts.sh
     user root
     oneshot
