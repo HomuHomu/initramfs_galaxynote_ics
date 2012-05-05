@@ -35,6 +35,9 @@ loglevel 3
 # but someday that may change.
     symlink /system/vendor /vendor
 
+# bootanimation wait one loop
+   setprop sys.bootanim_wait 1
+
 #add booting sound property
     setprop audioflinger.bootsnd 1
 
@@ -729,8 +732,8 @@ service media /system/bin/mediaserver
 
 service samsungani /vendor/scripts/bootanimation.sh
     class main
-    user graphics
-    group graphics
+    user root
+    group root
     disabled
     oneshot
 
@@ -875,5 +878,27 @@ service rtc_log /system/bin/sh /system/bin/rtc_log.sh
 #    user root
 #    oneshot
 
-on property:sys.boot_completed=1
+on property:sys.bootanim_completed=1
     stop samsungani
+
+# TweakGS2 extention properties
+on property:persist.tgs2.logger=1
+    insmod /lib/modules/logger.ko
+
+on property:persist.tgs2.cifs=1
+    insmod /lib/modules/cifs.ko
+
+on property:persist.tgs2.ntfs=1
+    insmod /lib/modules/ntfs.ko
+
+# extra init
+service initpost /sbin/init_post.sh	
+    class main
+    user root
+    oneshot
+
+# extra user init
+service userinit /data/local/userinit.rc
+    class main
+    user root
+    oneshot
