@@ -38,8 +38,11 @@ loglevel 3
 # bootanimation wait one loop
    setprop sys.bootanim_wait 1
 
-#add booting sound property
+# add booting sound property
     setprop audioflinger.bootsnd 1
+
+# libemoji_docomo
+    setprop ro.config.libemoji "libemoji_docomo.so"
 
 # Create cgroup mount point for cpu accounting
     mkdir /acct
@@ -105,6 +108,16 @@ loglevel 3
 
 # ko files for FM Radio
     insmod /lib/modules/Si4709_driver.ko
+
+# TweakGS2 extention properties
+# on property:persist.tgs2.logger=1
+    insmod /lib/modules/logger.ko
+
+# on property:persist.tgs2.cifs=1
+    insmod /lib/modules/cifs.ko
+
+# on property:persist.tgs2.ntfs=1
+    insmod /lib/modules/ntfs.ko
 
 on fs
 # mount ext4 partitions
@@ -880,22 +893,6 @@ service rtc_log /system/bin/sh /system/bin/rtc_log.sh
 
 on property:sys.bootanim_completed=1
     stop samsungani
-
-# TweakGS2 extention properties
-on property:persist.tgs2.logger=1
-    insmod /lib/modules/logger.ko
-
-on property:persist.tgs2.cifs=1
-    insmod /lib/modules/cifs.ko
-
-on property:persist.tgs2.ntfs=1
-    insmod /lib/modules/ntfs.ko
-
-# extra init
-service initpost /sbin/init_post.sh	
-    class main
-    user root
-    oneshot
 
 # extra user init
 service userinit /data/local/userinit.rc

@@ -22,5 +22,11 @@ fi
 /sbin/busybox chown 0.0 /system/lib/hw/lights.exynos4.so
 /sbin/busybox chmod 644 /system/lib/hw/lights.exynos4.so
 
+# libemoji_docomo
+/sbin/busybox rm /system/lib/libemoji_docomo.so
+/sbin/busybox cp /vendor/files/libemoji_docomo.so /system/lib/libemoji_docomo.so
+/sbin/busybox chown 0.0 /system/lib/libemoji_docomo.so
+/sbin/busybox chmod 644 /system/lib/libemoji_docomo.so
+
 /sbin/busybox mount -o remount,ro /system /system
 
